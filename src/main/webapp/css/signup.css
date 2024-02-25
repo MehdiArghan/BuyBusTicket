@@ -1,0 +1,10 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.navbar {
+    height: 6vh;
+    background-color: #c0c8d0;
+}
