@@ -1,0 +1,32 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../picture/q_imgfa_ir__5fa6ba1266ee6_1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 75vh;
+    width: 100%;
+}
+.navbar{
+    height: 6vh;
+    background-color:#c0c8d0;
+}
+.scrolling-text {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color:#333;
+    color: #fff;
+    height: 6vh;
+    overflow: hidden;
+}
+
+.scrolling-text marquee {
+    margin-top: 10px;
+    font-size: 14px;
+}
