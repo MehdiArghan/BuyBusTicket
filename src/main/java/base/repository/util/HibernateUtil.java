@@ -4,10 +4,10 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 public class HibernateUtil {
-    private final EntityManagerFactory entityManagerFactory =
+    private static final EntityManagerFactory entityManagerFactory =
             Persistence.createEntityManagerFactory("bus");
 
-    public EntityManagerFactory getEntityManagerFactory() {
+    public static EntityManagerFactory getEntityManagerFactory() {
         return entityManagerFactory;
     }
 }

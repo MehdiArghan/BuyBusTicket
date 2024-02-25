@@ -119,9 +119,9 @@
                             <strong>
                                 <label>Gender :</label><br>
                                 <label for="male">Male</label>
-                                <input type="radio" id="male" name="option" value="male" checked/>
+                                <input type="radio" id="male" name="optionGender" value="male" checked/>
                                 <label for="female" style="margin-left: 15px">Female</label>
-                                <input type="radio" id="female" name="option" value="female"/>
+                                <input type="radio" id="female" name="optionGender" value="female"/>
                             </strong>
                         </div>
                         <div class="container text-center">
