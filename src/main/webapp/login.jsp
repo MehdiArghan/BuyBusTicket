@@ -2,10 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Signup</title>
+    <title>Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -52,6 +52,7 @@
                     <a class="nav-link" style="color: black" aria-current="page"
                        href="Logout"><strong>Logout</strong></a>
                 </li>
+
                 <%
                     }
                 %>
@@ -67,19 +68,6 @@
         <div class="col-md-4 offset-md-4">
             <div class="card mt-3">
                 <%
-                    String messageSavePerson = (String) session.getAttribute("messageSavePerson");
-                    if (messageSavePerson != null) {
-                %>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong><%= messageSavePerson %>
-                    </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <%
-                        session.removeAttribute("messageSavePerson");
-                    }
-                %>
-                <%
                     String error = (String) session.getAttribute("error");
                     if (error != null) {
                 %>
@@ -92,19 +80,9 @@
                         session.removeAttribute("error");
                     }
                 %>
-                <div class="card-header text-center fs-4"><h3>Signup</h3></div>
+                <div class="card-header text-center fs-4"><h3>Login</h3></div>
                 <div class="card-body">
-                    <form action="signup" method="post" target="_self">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label"><strong>Firstname :</strong></label>
-                            <input type="text" class="form-control" id="firstName" name="firstName"
-                                   placeholder="Enter your first name..." required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label"><strong>Lastname :</strong></label>
-                            <input type="text" class="form-control" id="lastName" name="lastName"
-                                   placeholder="Enter your last name..." required>
-                        </div>
+                    <form action="Login" method="post" target="_self">
                         <div class="mb-3">
                             <label for="username" class="form-label"><strong>Username :</strong></label>
                             <input type="text" class="form-control" id="username" name="userName"
@@ -115,21 +93,12 @@
                             <input type="password" class="form-control" id="password" name="password"
                                    placeholder="Enter your password..." required>
                         </div>
-                        <div class="mb-3">
-                            <strong>
-                                <label>Gender :</label><br>
-                                <label for="male">Male</label>
-                                <input type="radio" id="male" name="optionGender" value="MALE" checked/>
-                                <label for="female" style="margin-left: 15px">Female</label>
-                                <input type="radio" id="female" name="optionGender" value="FEMALE"/>
-                            </strong>
-                        </div>
                         <div class="container text-center">
-                            <button type="submit" class="btn btn-primary">Signup</button>
+                            <button type="submit" class="btn btn-primary">Login</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
                         </div>
                         <div class="mt-3 text-center">
-                            <strong>Already have an account? <a href="login.jsp">Login</a></strong>
+                            <strong>Not a member? <a href="signup.jsp">Signup</a></strong>
                         </div>
                     </form>
                 </div>

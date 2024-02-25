@@ -10,4 +10,8 @@ public class PersonServiceImpl extends BaseServiceImpl<Long, Person, PersonRepos
     public PersonServiceImpl(EntityManager entityManager, PersonRepository repository) {
         super(entityManager, repository);
     }
+    @Override
+    public Person findByUserName(String userName) {
+        return repository.findByUserName(userName);
+    }
 }
