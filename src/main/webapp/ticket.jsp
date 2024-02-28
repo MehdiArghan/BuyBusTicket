@@ -167,17 +167,16 @@
         <tbody>
         <%
             List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
-            if (tickets==null){
+            if (tickets == null) {
 
-                %>
+        %>
         <tr>
 
         </tr>
         <%
-            }else{
+        } else {
             int counter = 1;
-            for (Ticket tickets1 :tickets)
-            {
+            for (Ticket tickets1 : tickets) {
         %>
         <tr>
             <td><%= counter++ %></td>
@@ -186,35 +185,49 @@
             <td><%= tickets1.getDepartureDate() %></td>
             <td><%= tickets1.getDepartureTime() %></td>
             <td><%= tickets1.getTravelId() %></td>
-            <td><button class="btn btn-danger btn-sm"><a class="nav-link" aria-current="page"
-                   data-bs-toggle="modal" data-bs-target="#selectTicket" href="">BUY</a></button></td>
+            <td>
+                <button class="btn btn-danger btn-sm" data-travel-id="<%= tickets1.getTravelId() %>"
+                        data-bs-toggle="modal" data-bs-target="#selectTicket">BUY</button>
+            </td>
         </tr>
-        <div class="modal fade" id="selectTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">select ticket</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <strong>Do you want to choose this ticket?</strong>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="container text-center">
-                            <a href="saveTicket?travelId=<%= tickets1.getTravelId() %>" class="btn btn-primary">YES</a>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <% }
             session.removeAttribute("tickets");
-            }
-            %>
+        }
+        %>
         </tbody>
     </table>
 </div>
+
+<div class="modal fade" id="selectTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Select ticket</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <strong>Do you want to choose this ticket?</strong>
+            </div>
+            <div class="modal-footer">
+                <div class="container text-center">
+                    <a id="confirmBuyTicket" href="#" class="btn btn-primary">YES</a>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#selectTicket').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var travelId = button.data('travel-id');
+            var modal = $(this);
+            modal.find('#confirmBuyTicket').attr('href', 'saveTicket?travelId=' + travelId);
+        });
+    });
+</script>
 
 </body>
 </html>

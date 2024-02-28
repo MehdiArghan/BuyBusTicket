@@ -1,6 +1,7 @@
 package controller.ticket;
 
 import base.repository.util.HibernateUtil;
+import entity.Gender;
 import entity.Person;
 import entity.Ticket;
 import jakarta.persistence.EntityManager;
@@ -41,8 +42,13 @@ public class SaveTicket extends HttpServlet {
 
         if (ticket.getPerson() == null) {
             ticket.setPerson(person);
+            String error;
             ticketService.update(ticket);
-            String error = "The desired ticket was successfully registered";
+            if (person.getGender().equals(Gender.MALE)){
+                error = "Mr "+person.getFirstName()+person.getLastName()+" your ticket purchase was successful";
+            }else {
+                error = "Mrs "+person.getFirstName()+person.getLastName()+" your ticket purchase was successful";
+            }
             httpSession.setAttribute("error", error);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ticket.jsp");
             requestDispatcher.forward(req, resp);
