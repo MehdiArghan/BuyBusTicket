@@ -1,6 +1,7 @@
 package service.impl;
 
 import base.service.impl.BaseServiceImpl;
+import entity.Person;
 import entity.Ticket;
 import jakarta.persistence.EntityManager;
 import repository.TicketRepository;
@@ -22,5 +23,10 @@ public class TicketServiceImpl extends BaseServiceImpl<Long, Ticket, TicketRepos
     @Override
     public Ticket findByTravelId(String travelId) {
         return repository.findByTravelId(travelId);
+    }
+
+    @Override
+    public List<Ticket> findByUserName(String userName) {
+        return repository.findByUserName(userName);
     }
 }

@@ -1,6 +1,7 @@
 package repository.impl;
 
 import base.repository.impl.BaseRepositoryImpl;
+import entity.Person;
 import entity.Ticket;
 import jakarta.persistence.EntityManager;
 import repository.TicketRepository;
@@ -38,5 +39,14 @@ public class TicketRepositoryImpl extends BaseRepositoryImpl<Long, Ticket> imple
                         ("from Ticket t where t.travelId =:TRAVELID", Ticket.class)
                 .setParameter("TRAVELID", travelId)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<Ticket> findByUserName(String userName) {
+        return entityManager.createQuery(
+                        "from Ticket t where t.person.userName =:USERNAME  order by t.departureTime asc "
+                        , Ticket.class)
+                .setParameter("USERNAME", userName)
+                .getResultList();
     }
 }

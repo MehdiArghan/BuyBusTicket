@@ -1,6 +1,12 @@
 <%@ page import="entity.Person" %>
+<%@ page import="base.repository.util.HibernateUtil" %>
+<%@ page import="jakarta.persistence.EntityManager" %>
+<%@ page import="service.TicketService" %>
+<%@ page import="service.impl.TicketServiceImpl" %>
+<%@ page import="repository.impl.TicketRepositoryImpl" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entity.Ticket" %>
+<%@ page import="java.util.ArrayList" %>
 <%
     Person currentPerson = (Person) session.getAttribute("currentPerson");
     if (currentPerson == null) {
@@ -12,13 +18,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <title>purchasedTickets</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>ticket</title>
+    <title>purchasedTickets</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/ticket.css">
+    <link rel="stylesheet" href="css/purchasedtickets.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -63,11 +70,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: black" aria-current="page" href="purchasedtickets.jsp">
-                        <strong>Purchased tickets</strong>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" style="color: black" aria-current="page"
                        data-bs-toggle="modal" data-bs-target="#statsModal" href="">
                         <strong>Logout</strong></a>
@@ -80,7 +82,6 @@
         </div>
     </div>
 </nav>
-
 
 <div class="modal fade" id="statsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
@@ -103,58 +104,6 @@
 </div>
 
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4 offset-md-4">
-            <div class="card mt-3">
-                <%
-                    String error = (String) session.getAttribute("error");
-                    if (error != null) {
-                %>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong><%= error %>
-                    </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <%
-                        session.removeAttribute("error");
-                    }
-                %>
-                <div class="card-header text-center fs-4">Select ticket</div>
-                <div class="card-body">
-                    <form action="ticket" method="post" target="_self">
-                        <div class="form-group mb-2">
-                            <label for="origin">Choose a origin :</label>
-                            <select class="form-control" id="origin" name="origin">
-                                <option value="shiraz">shiraz</option>
-                                <option value="tehran" selected>tehran</option>
-                                <option value="mashhad">mashhad</option>
-                                <option value="sari">sari</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="destination">Choose a destination :</label>
-                            <select class="form-control" id="destination" name="destination">
-                                <option value="shiraz">shiraz</option>
-                                <option value="tehran">tehran</option>
-                                <option value="mashhad" selected>mashhad</option>
-                                <option value="sari">sari</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="date">Select a date:</label>
-                            <input type="date" id="date" name="date" class="form-control" value="2022-03-15">
-                        </div>
-                        <div class="container text-center">
-                            <button type="submit" class="btn btn-primary">Searching</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container">
     <table class="table table-bordered table-striped text-center mt-5">
         <thead>
@@ -165,12 +114,20 @@
             <th class="col-md-2">departureDate</th>
             <th class="col-md-2">departureTime</th>
             <th class="col-md-2">travelId</th>
-            <th class="col-md-1">Buy tickets</th>
+            <th class="col-md-1">cancel</th>
         </tr>
         </thead>
         <tbody>
         <%
-            List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
+            EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+            TicketService ticketService = new TicketServiceImpl(entityManager, new TicketRepositoryImpl(entityManager));
+            String userName = person.getUserName();
+            List<Ticket> tickets;
+            if (userName == null) {
+                tickets = new ArrayList<>();
+            } else {
+                tickets = ticketService.findByUserName(person.getUserName());
+            }
             if (tickets == null) {
 
         %>
@@ -197,27 +154,26 @@
             </td>
             <td>
                 <button class="btn btn-danger btn-sm" data-travel-id="<%= tickets1.getTravelId() %>"
-                        data-bs-toggle="modal" data-bs-target="#selectTicket">BUY
-                </button>
+                        data-bs-toggle="modal" data-bs-target="#selectTicket">cancel</button>
             </td>
         </tr>
         <% }
-            session.removeAttribute("tickets");
         }
         %>
         </tbody>
     </table>
 </div>
 
+
 <div class="modal fade" id="selectTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Select ticket</h1>
+                <h1 class="modal-title fs-5">remove ticket</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <strong>Do you want to choose this ticket?</strong>
+                <strong>Do you want to cancel your ticket?</strong>
             </div>
             <div class="modal-footer">
                 <div class="container text-center">
@@ -235,10 +191,11 @@
             var button = $(event.relatedTarget);
             var travelId = button.data('travel-id');
             var modal = $(this);
-            modal.find('#confirmBuyTicket').attr('href', 'saveTicket?travelId=' + travelId);
+            modal.find('#confirmBuyTicket').attr('href', 'remove?travelId=' + travelId);
         });
     });
 </script>
+
 
 </body>
 </html>
