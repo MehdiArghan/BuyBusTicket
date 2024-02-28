@@ -2,6 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Signup</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,14 +46,15 @@
                 } else {
                 %>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: black" aria-current="page" href="election.jsp">
+                    <a class="nav-link" style="color: black" aria-current="page" href="ticket.jsp">
                         <strong><%=person.getUserName()%>
                         </strong>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="color: black" aria-current="page"
-                       href="Logout"><strong>Logout</strong></a>
+                       data-bs-toggle="modal" data-bs-target="#statsModal" href="">
+                        <strong>Logout</strong></a>
                 </li>
                 <%
                     }
@@ -60,6 +64,26 @@
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="statsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Logout</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <strong>Do you want to Logout of your account?</strong>
+            </div>
+            <div class="modal-footer">
+                <div class="container text-center">
+                    <a href="Logout" class="btn btn-primary">YES</a>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="container-fluid">
@@ -117,10 +141,10 @@
                         </div>
                         <div class="mb-3">
                             <strong>
-                                <label>Gender :</label><br>
+                                <label>Gender :</label>
                                 <label for="male">Male</label>
                                 <input type="radio" id="male" name="optionGender" value="MALE" checked/>
-                                <label for="female" style="margin-left: 15px">Female</label>
+                                <label for="female" style="margin-left: 10px">Female</label>
                                 <input type="radio" id="female" name="optionGender" value="FEMALE"/>
                             </strong>
                         </div>

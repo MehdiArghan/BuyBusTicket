@@ -12,6 +12,6 @@ import java.io.IOException;
 public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath()+"/election.jsp");
+        resp.sendRedirect(req.getContextPath()+"/ticket.jsp");
     }
 }

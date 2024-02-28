@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Setter
 @Getter
@@ -23,7 +24,7 @@ public class Ticket extends BaseEntity<Long> {
     String destination;
     @Temporal(TemporalType.DATE)
     LocalDate departureDate;
-    String departureTime;
+    LocalTime departureTime;
     String travelId;
     @ManyToOne
     Person person;
