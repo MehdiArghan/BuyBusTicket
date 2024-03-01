@@ -1,4 +1,11 @@
 <%@ page import="entity.Person" %>
+<%
+    Person currentPerson = (Person) session.getAttribute("currentPerson");
+    if (currentPerson != null) {
+        response.sendRedirect("/index.jsp");
+        return;
+    }
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

@@ -45,9 +45,9 @@ public class SaveTicket extends HttpServlet {
             String error;
             ticketService.update(ticket);
             if (person.getGender().equals(Gender.MALE)){
-                error = "Mr "+person.getFirstName()+person.getLastName()+" your ticket purchase was successful";
+                error = "Mr "+person.getFirstName()+" "+person.getLastName()+" your ticket purchase was successful";
             }else {
-                error = "Mrs "+person.getFirstName()+person.getLastName()+" your ticket purchase was successful";
+                error = "Mrs "+person.getFirstName()+" "+person.getLastName()+" your ticket purchase was successful";
             }
             httpSession.setAttribute("error", error);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ticket.jsp");
